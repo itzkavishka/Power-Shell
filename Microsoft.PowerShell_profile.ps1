@@ -194,4 +194,3 @@ Set-PSReadLineOption -Colors @{
     Parameter = 'Green'
     String = 'DarkCyan'
 }
-
