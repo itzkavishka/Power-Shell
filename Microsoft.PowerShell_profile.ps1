@@ -194,3 +194,10 @@ Set-PSReadLineOption -Colors @{
     Parameter = 'Green'
     String = 'DarkCyan'
 }
+try {
+    oh-my-posh init pwsh | Invoke-Expression
+    (zoxide init powershell | Out-String) | Invoke-Expression
+}
+catch {
+    Write-Warning "Error occurred: $_"
+}
