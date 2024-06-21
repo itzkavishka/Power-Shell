@@ -15,6 +15,13 @@ function prompt {
 $adminSuffix = if ($isAdmin) { " [ADMIN]" } else { "" }
 $Host.UI.RawUI.WindowTitle = "PowerShell $($PSVersionTable.PSVersion) $adminSuffix"
 
+# Utility Functions 
+function Test-CommandExists {
+    param($command)
+    $exists = $null -ne (Get-Command $command -ErrorAction SilentlyContinue)
+    return $exists
+}
+
 # Edit the profile
 function Edit-Profile {
     code $PROFILE.CurrentUserAllHosts
