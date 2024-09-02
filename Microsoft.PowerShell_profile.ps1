@@ -1,25 +1,7 @@
-### PowerShell Profile Refactor
-### Version 1.04 - Cleaned Up
-
-# Ensure Terminal-Icons module is installed
-if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
-    Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
-}
 Import-Module -Name Terminal-Icons
 
-# Admin Check and Prompt Customization
-$isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-function prompt {
-    if ($isAdmin) { "[" + (Get-Location) + "] # " } else { "[" + (Get-Location) + "] $ " }
-}
-$adminSuffix = if ($isAdmin) { " [ADMIN]" } else { "" }
-$Host.UI.RawUI.WindowTitle = "PowerShell $($PSVersionTable.PSVersion) $adminSuffix"
-
-# Utility Functions 
-function Test-CommandExists {
-    param($command)
-    $exists = $null -ne (Get-Command $command -ErrorAction SilentlyContinue)
-    return $exists
+function runass {
+    start-process PowerShell -verb runas
 }
 
 # Edit the profile
@@ -200,11 +182,4 @@ Set-PSReadLineOption -Colors @{
     Command = 'Yellow'
     Parameter = 'Green'
     String = 'DarkCyan'
-}
-try {
-    oh-my-posh init pwsh | Invoke-Expression
-    (zoxide init powershell | Out-String) | Invoke-Expression
-}
-catch {
-    Write-Warning "Error occurred: $_"
 }
